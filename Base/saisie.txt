@@ -1,0 +1,468 @@
+AMORTISSEMENT:Depresiatuon de l'actif par rapport au temps
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Document</title>
+        <link rel="stylesheet" href="<?php echo base_url("vendors/mdi/css/materialdesignicons.min.css");?>">
+            <link rel="stylesheet" href="<?php echo base_url("template/vendors/base/vendor.bundle.base.css");?>">
+            <!-- endinject -->
+            <!-- plugin css for this page -->
+            <link rel="stylesheet" href="<?php echo base_url("template/vendors/datatables.net-bs4/dataTables.bootstrap4.css");?>">
+            <!-- End plugin css for this page -->
+            <!-- inject:css -->
+            <link rel="stylesheet" href="<?php echo base_url("template/css/style.css");?>">
+            <!-- endinject -->
+            <link rel="shortcut icon" href="<?php echo base_url("template/images/favicon.png");?>" />
+    </head>
+    <body>
+            <div class="container-scroller">
+                <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+                    <div class="navbar-brand-wrapper d-flex justify-content-center">
+                        <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">  
+                            <a class="navbar-brand brand-logo" href="index.html"><img src="images/" alt="logo"/></a>
+                            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo-mini.svg" alt="logo"/></a>
+                            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                                <span class="mdi mdi-sort-variant"></span>
+                            </button>
+                        </div>  
+                    </div>
+                </nav>
+                <div class="container-fluid page-body-wrapper">
+                    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                        <ul class="nav">
+                            <li class="nav-item">
+                            <a class="nav-link" href="<?php echo site_url("Welcome/compte"); ?>">
+                                <i class="mdi mdi-home menu-icon"></i>
+                                <span class="menu-title">Compte</span>
+                            </a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link" href="<?php echo site_url("Welcome/ecriture"); ?>">
+                                <i class="mdi mdi-grid-large menu-icon"></i>
+                                <span class="menu-title">Ecriture</span>
+                            </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="main-panel">
+                        <div class="content-wrapper">
+                            <div class="row">
+                                    <div class="col-md-12 grid-margin">
+                                        <div class="d-flex justify-content-between flex-wrap">
+                                            <div class="d-flex align-items-end flex-wrap">
+                                                <div class="me-md-3 me-xl-5">
+                                                    <h2>Saisie Ecriture</h2>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="col-12 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form class="pt-3" autocomplete="off" methode="get" action="<?php echo site_url("SaisieC/addEcriture"); ?>">
+                                            <div class="table-responsive">    
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <th>jour</th>
+                                                            <th>libelle</th>
+                                                            <th>Ref-piece</th>
+                                                        </tr>
+                                                            <tr>
+                                                                <td><input type="number" name="jour" placeholder="jour"></td>
+                                                                <td><input type="text" name="libelle" placeholder="libelle"></td>
+                                                                <td><input  type="text" name="ref" placeholder="ref_piece"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </thead>
+                                                </table>
+                                            </div>              
+                                            <div class="table-responsive">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>compte</th>
+                                                            <th>tiers</th>
+                                                            <th>credit</th>
+                                                            <th>debit</th>
+                                                            <th>valeur</th>
+                                                            <th>taux</th>
+                                                            <th>devise</th>
+                                                        </tr>
+                                                    <tbody id="demo" >
+                                                    <!-- <div id="demo"></div>-->
+                                                    </tbody>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>total debit</th>
+                                                            <th>total credit</th>
+                                                        </tr>
+                                                        <tbody id="total">
+                                                          
+                                                        </tbody>
+                                                    </thead>
+                                                </table>
+                                            </div>  
+                                                <div id="isany"></div>
+                                                <input type="hidden" name="idExercice" value="<?php echo $idExercice[0]; ?>">
+                                                <input type="hidden" name="idCode" value="<?php echo $idCode[0]; ?>">
+                                                <input type="hidden" name="mois" value="<?php echo $mois[0]; ?>">
+                                                <input type="hidden" name="annee" value="<?php echo $annee[0]; ?>">
+                                                <input type="hidden" name="values" id="values" />
+                                            </div>    
+                                            <div class="my-3">
+                                                <button type="submit" class="btn btn-primary me-2">valider</button>
+                                                <button type="button" class="btn btn-primary me-2" onclick="ajoutMouvement()">add</button>
+                                                <button type="button" class="btn btn-primary me-2" onclick="equilibrer()">equilibrer</button>
+                                            </div>                                
+                                            </form>
+                                                
+                                    </div>
+                                </div>
+                            </div>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <datalist id="browser">
+        <?php foreach($listeCompte as $row){?>
+            <option value="<?php echo $row['numero'];?>">
+        <?php } ?>
+    </datalist>
+    <datalist id="devise">
+        <?php foreach($listeDevise as $row){?>
+            <option value="<?php echo $row['nomdevise'];?>">
+        <?php } ?>
+    </datalist>                          
+        <script>
+            var i = 0;
+            var a = "";
+            var debit=0;
+            var credit = 0;
+        function deviseOption(indice){
+            xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("option"+indice).innerHTML = this.responseText;
+                }
+            };
+            xhttp.open("GET", "<?php echo site_url("SaisieC/devise");?>", true);
+            xhttp.send();
+        }
+        function generateInput(y,compte,tiers,credit,debit,taux,valeur,devise){
+            return "<tr><td><input list='browser' type='text' name='compte"+y+"' id='compte"+y+"' placeholder='compte' value='"+compte+"' /></td><td><input type='text' name='tiers"+y+"' id='tiers"+y+"'placeholder='tiers' value='"+tiers+"'/></td><td> <input type='number' name='credit"+y+"' id='credit"+y+"' placeholder='credit' value='"+credit+"' onfocus='calculeDevise("+y+",true)'/></td><td><input type='number' name='debit"+y+"' id='debit"+y+"'placeholder='debit' value='"+debit+"' onfocus='calculeDevise("+y+",false)'/></td><td><input type='number' name='valeur"+y+"' id='valeur"+y+"' placeholder='valeur' value='"+valeur+"'></td><td><input type='number' name='taux"+y+"' id='taux"+y+"' placeholder='En Ariary' value='"+taux+"'></td><td><input list='devise' name='devise' id='devise"+y+"' placeholder='devise' value='"+devise+"'></td><td><button type='button' onclick='effacer("+y+")' >X</button></td></tr>";
+        }
+        function calculeDevise(y,boolcredit){
+            var taux = document.getElementById("taux"+y).value;
+            var valeur = document.getElementById("valeur"+y).value; 
+            var val = 0;
+            var rep= "";
+            var e = 0;
+            var av = "";
+            debits = 0;
+            credits = 0;
+            for(e = 1 ; e <= i ; e++){
+                var compte = document.getElementById("compte"+e).value;
+                var tiers = document.getElementById("tiers"+e).value;
+                var credit = document.getElementById("credit"+e).value;
+                var debit = document.getElementById("debit"+e).value;
+                var tauxu = document.getElementById("taux"+e).value;
+                var valeuru = document.getElementById("valeur"+e).value;
+                var devises = document.getElementById("devise"+e).value;
+                if(e==y){
+                    rep = generateInput(y,compte,tiers,credit,debit,tauxu,valeuru,devises);
+                    if(taux != '' && valeur != ''){
+                        val = parseInt(taux) * parseInt(valeur);
+                        if(boolcredit == true){
+                            rep = generateInput(y,compte,tiers,val,'',tauxu,valeuru,devises);
+                            credits = credits + val;
+                        }else{
+                            rep = generateInput(y,compte,tiers,'',val,tauxu,valeuru,devises);
+                            debits = debits + val;
+                        }
+                    }
+                    av = av + rep;
+                }else{
+                    av = av + generateInput(e,compte,tiers,credit,debit,tauxu,valeuru,devises);
+                }
+                if(credit != ''){
+                        credits = credits + parseInt(credit); 
+                }
+                if(debit != ''){
+                    debits = debits + parseInt(debit); 
+                }
+            }
+            var isany = "<input type='hidden' name='nombre' value='"+i+"'>";
+            var total = "<p>credit:"+credits+" debit:"+debits+"<p>";
+            document.getElementById("demo").innerHTML=av;
+            document.getElementById("isany").innerHTML=isany;
+            document.getElementById("total").innerHTML=total;
+            
+        }
+        function equilibrer(){
+            var e= 1;
+            var cred = 0;
+            var deb = 0;
+            var tcred = 0;
+            var tdeb = 0;
+            var av = "";
+            var diff = 0;
+            if(i >= 1){
+                for(e = 1 ; e <= i ; e++){
+                    var credit = document.getElementById("credit"+e).value;
+                    var debit = document.getElementById("debit"+e).value;
+                    //av = av + "<input list='browser' type='text' name='compte"+e+"' id='compte"+e+"' placeholder='compte' value='"+compte+"' /><input type='text' name='tiers"+e+"' id='tiers"+e+"'placeholder='tiers' value='"+tiers+"'/> <input type='number' name='credit"+e+"' id='credit"+e+"' placeholder='credit' value='"+credit+"'/><input type='number' name='debit"+e+"' id='debit"+e+"'placeholder='debit' value='"+debit+"'/><button type='button' onclick='effacer("+e+")' >X</button></br>";
+                    if(credit != ''){
+                        tcred = tcred + parseInt(credit);
+                        cred = cred+1;
+                    }
+                    if(debit != ''){
+                        tdeb =  tdeb + parseInt(debit);
+                        deb = deb + 1;
+                    }
+                }
+                if(tdeb > tcred){
+                    if(cred == 1){
+                        for(e = 1 ; e <= i ; e++){
+                            var compte = document.getElementById("compte"+e).value;
+                            var tiers = document.getElementById("tiers"+e).value;
+                            var credit = document.getElementById("credit"+e).value;
+                            var debit = document.getElementById("debit"+e).value;
+                            var tauxu = document.getElementById("taux"+e).value;
+                            var valeuru = document.getElementById("valeur"+e).value;
+                            var devises = document.getElementById("devise"+e).value;
+                            if(credit !=''){
+                                var vt = tdeb/parseInt(tauxu);
+                                av = av + generateInput(e,compte,tiers,tdeb,debit,tauxu,vt,devises);
+                            }
+                            if(debit !=''){
+                                av = av + generateInput(e,compte,tiers,credit,debit,tauxu,valeuru,devises);
+                            }
+                            if(debit =='' && credit == ''){
+                                av = av + generateInput(e,compte,tiers,credit,debit,tauxu,valeuru,devises);
+                            }
+                    
+                        }
+                    }else if(cred == 0){
+                        var tc = 0;
+                        for(e = 1 ; e <= i ; e++){
+                            var compte = document.getElementById("compte"+e).value;
+                            var tiers = document.getElementById("tiers"+e).value;
+                            var credit = document.getElementById("credit"+e).value;
+                            var debit = document.getElementById("debit"+e).value;
+                            var tauxu = document.getElementById("taux"+e).value;
+                            var valeuru = document.getElementById("valeur"+e).value;
+                            var devises = document.getElementById("devise"+e).value;
+                            if(debit =='' && credit == ''){
+                                if(tc == 0){
+                                    var vt = tdeb/parseInt(tauxu);
+                                    av = av + generateInput(e,compte,tiers,tdeb,debit,tauxu,vt,devises);
+                                }else{
+                                    av = av + generateInput(e,compte,tiers,credit,debit,tauxu,valeuru,devises);
+                                }
+                            }else{
+                                av = av + generateInput(e,compte,tiers,credit,debit,tauxu,valeuru,devises);
+                            }
+                        }
+                        if(tc == 0){
+                            
+                        }
+                    }else{
+                        diff = tdeb - tcred;
+                        var moy = diff/cred;
+                        for(e = 1 ; e <= i ; e++){
+                            var compte = document.getElementById("compte"+e).value;
+                            var tiers = document.getElementById("tiers"+e).value;
+                            var credit = document.getElementById("credit"+e).value;
+                            var debit = document.getElementById("debit"+e).value;
+                            var tauxu = document.getElementById("taux"+e).value;
+                            var valeuru = document.getElementById("valeur"+e).value;
+                            var devises = document.getElementById("devise"+e).value;
+                            if(credit !=''){
+                                var cref = moy + parseInt(credit);
+                                var vt = cref/parseInt(tauxu);
+                                av = av + generateInput(e,compte,tiers,cref,debit,tauxu,vt,devises);
+                            }
+                            if(debit !=''){
+                                av = av + generateInput(e,compte,tiers,credit,debit,tauxu,valeuru,devises);
+                            }
+                            if(debit =='' && credit == ''){
+                                av = av + generateInput(e,compte,tiers,credit,debit,tauxu,valeuru,devises);
+                            }
+                        }
+                    }
+                }
+                else if(tdeb < tcred){
+                    if(deb == 1){
+                        for(e = 1 ; e <= i ; e++){
+                            var compte = document.getElementById("compte"+e).value;
+                            var tiers = document.getElementById("tiers"+e).value;
+                            var credit = document.getElementById("credit"+e).value;
+                            var debit = document.getElementById("debit"+e).value;
+                            var tauxu = document.getElementById("taux"+e).value;
+                            var valeuru = document.getElementById("valeur"+e).value;
+                            var devises = document.getElementById("devise"+e).value;
+                            if(debit !=''){
+                                var vt = tcred/parseInt(tauxu);
+                                av = av + generateInput(e,compte,tiers,credit,tcred,tauxu,vt,devises);
+                            }
+                            if(credit !=''){
+                                
+                                av = av + generateInput(e,compte,tiers,credit,debit,tauxu,valeuru,devises);
+                            }
+                            if(debit =='' && credit == ''){
+                                av = av + generateInput(e,compte,tiers,credit,debit,tauxu,valeuru,devises);
+                            }
+                        }
+                    }else if(deb == 0){
+                        var t = 0;
+                        for(e = 1 ; e <= i ; e++){
+                            var compte = document.getElementById("compte"+e).value;
+                            var tiers = document.getElementById("tiers"+e).value;
+                            var credit = document.getElementById("credit"+e).value;
+                            var debit = document.getElementById("debit"+e).value;
+                            var tauxu = document.getElementById("taux"+e).value;
+                            var valeuru = document.getElementById("valeur"+e).value;
+                            var devises = document.getElementById("devise"+e).value;
+                            if(debit =='' && credit == ''){
+                                if(t == 0){
+                                    var vt = tcred/parseInt(tauxu);
+                                    av = av + generateInput(e,compte,tiers,credit,tcred,tauxu,vt,devises);
+                                }else{
+                                    av = av + generateInput(e,compte,tiers,credit,debit,tauxu,valeuru,devises);
+                                }
+                            }else{
+                                av = av + generateInput(e,compte,tiers,credit,debit,tauxu,valeuru,devises);
+                            }
+                        }
+                        if(t == 0){
+                            
+                        }
+                    }
+                    else{
+                        diff = tcred - tdeb;
+                        var moye = diff/deb;
+                        for(e = 1 ; e <= i ; e++){
+                            var compte = document.getElementById("compte"+e).value;
+                            var tiers = document.getElementById("tiers"+e).value;
+                            var credit = document.getElementById("credit"+e).value;
+                            var debit = document.getElementById("debit"+e).value;
+                            var tauxu = document.getElementById("taux"+e).value;
+                            var valeuru = document.getElementById("valeur"+e).value;
+                            var devises = document.getElementById("devise"+e).value;
+                            if(debit !=''){
+                                var def = moye + parseInt(debit);
+                                var vt = def/parseInt(tauxu);
+                                av = av + generateInput(e,compte,tiers,credit,def,tauxu,def,devises);
+                            }
+                            if(credit !=''){
+                                av = av + generateInput(e,compte,tiers,credit,debit,tauxu,valeuru,devises);
+                            }
+                            if(debit =='' && credit == ''){
+                                av = av + generateInput(e,compte,tiers,credit,debit,tauxu,valeuru,devises);
+                            }
+                        }
+                    }
+                }else{
+                av = getValues(); 
+                }
+            }
+            var isany = "<input type='hidden' name='nombre' value='"+i+"'>";
+            var total = "";
+            if(tcred < tdeb){
+                total = "<tr><td>"+tdeb+"</td><td>"+tdeb+"<td></tr>";
+            }else if(tdeb < tcred){
+                total = "<tr><td>"+tcred+"<td><td>"+tcred+"</td><tr>";
+            }
+            else{
+                total = "<tr><td>"+tdeb+"<td><td>"+tdeb+"</td><tr>";
+            }
+            document.getElementById("demo").innerHTML=av;
+            document.getElementById("isany").innerHTML=isany;
+            document.getElementById("total").innerHTML=total;
+        }
+        function ajoutMouvement() {
+            i = i + 1;
+            var text = generateInput(i,'','','','','','','');
+            var isany = "<input type='hidden' name='nombre' value='"+i+"'>";
+        
+            a = getValues()+ text+"</br>";
+            var total = "<tr><td>"+credits+"<td><td>"+debits+"</td><tr>";
+            document.getElementById("demo").innerHTML=a;
+            document.getElementById("isany").innerHTML=isany;
+            document.getElementById("total").innerHTML=total;
+        }
+        function getValues(){
+            var av = "";
+            var e = 1;
+            debits = 0;
+            credits = 0;
+            if(i > 1){
+                for(e = 1 ; e < i ; e++){
+                    var compte = document.getElementById("compte"+e).value;
+                    var tiers = document.getElementById("tiers"+e).value;
+                    var credit = document.getElementById("credit"+e).value;
+                    var debit = document.getElementById("debit"+e).value;
+                    var tauxu = document.getElementById("taux"+e).value;
+                    var valeuru = document.getElementById("valeur"+e).value;
+                    var devises = document.getElementById("devise"+e).value;
+                    av = av + generateInput(e,compte,tiers,credit,debit,tauxu,valeuru,devises);
+                    if(credit != ''){
+                        credits = credits + parseInt(credit); 
+                    }
+                    if(debit != ''){
+                        debits = debits + parseInt(debit); 
+                    }
+                }
+            }
+            return av;
+        }
+        function effacer(t){
+            var av = "";
+            var e = 1;
+            var a = 1;
+            debits = 0;
+            credits = 0;
+            if(i > 1){
+                for(a = 1 ; a <= i ; a++){
+                    if(a != t){
+                        var compte = document.getElementById("compte"+a).value;
+                        var tiers = document.getElementById("tiers"+a).value;
+                        var credit = document.getElementById("credit"+a).value;
+                        var debit = document.getElementById("debit"+a).value;
+                        var tauxu = document.getElementById("taux"+e).value;
+                        var valeuru = document.getElementById("valeur"+e).value;
+                        var devises = document.getElementById("devise"+e).value;
+                        av = av + generateInput(e,compte,tiers,credit,debit,tauxu,valeuru,devises);
+                        e = e + 1;
+                        if(credit != ''){
+                        credits = credits + parseInt(credit); 
+                        }
+                        if(debit != ''){
+                            debits = debits + parseInt(debit);  
+                        }
+                    }
+                
+                }
+            }
+            i = i -1;
+            var total = "<tr><td>"+credits+"</td><td>"+debits+"</td></tr>";
+            var isany = "<input type='hidden' name='nombre' value='"+i+"'>";
+        // var b = document.getElementById("demo").innerHTML;
+            document.getElementById("demo").innerHTML=av;
+            document.getElementById("isany").innerHTML=isany;
+            document.getElementById("total").innerHTML=total;
+        }
+    
+    </script>
+    </body>
+    </html>
