@@ -100,7 +100,7 @@
                     <input type="hidden" name="idCode" value="<?php echo $idCode[0]; ?>">
                     <input type="hidden" name="mois" value="<?php echo $mois[0]; ?>">
                     <input type="hidden" name="annee" value="<?php echo $annee[0]; ?>">
-                    <input type="hidden" name="values" id="values" />  
+                    <input type="hidden" name="values" id="values" />
                 <div class="my-3">
                     <button type="submit" class="btn btn-success me-2">valider</button>
                     <button type="button" class="btn btn-success me-2" onclick="ajoutMouvement()">ajouter</button>
@@ -129,7 +129,7 @@
             xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("option"+indice).innerHTML = this.responseText;
+                    document.getElementById("option"+indice).innerHTML = this.responseText;
                 }
             };
             xhttp.open("GET", "<?php echo site_url("SaisieC/devise");?>", true);
@@ -322,7 +322,7 @@
                             }
                         }
                         if(t == 0){
-                            
+
                         }
                     }
                     else{

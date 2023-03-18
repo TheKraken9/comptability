@@ -46,7 +46,7 @@
             <tr>
             <td><?php echo $row['numero']?></td>
             <td><?php echo $row['intitule']?></td>
-            <td><a href="http://localhost/comptability/Welcome/modifier/<?php echo $row['numero'] ?>" style="color: #6C1B0D">Modifier</a> | <a href="http://localhost/comptability/Welcome/supprimer/<?php echo $row['numero']?>" style="color: red">Supprimer</a></td>
+            <td><a href="http://localhost/comptability/Welcome/modifier?url=<?php echo $row['numero'] ?>" style="color: #6C1B0D">Modifier</a> | <a href="http://localhost/comptability/Welcome/supprimer?url=<?php echo $row['numero']?>" style="color: red">Supprimer</a></td>
             </tr>
         <?php } ?>
     </table>

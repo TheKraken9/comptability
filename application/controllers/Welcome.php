@@ -170,7 +170,7 @@ class Welcome extends CI_Controller {
 		    $this->load->view('listCompte',$data);
         }
 	}
-    public function ajoutCaractere(){
+    public function ajoutCaractere() {
         $carat = $this->input->get('nbre');
 		$this->load->model('MCaractere','cara');
         $this->cara->ajout($carat);
@@ -179,5 +179,50 @@ class Welcome extends CI_Controller {
             $data['listCompte'] = $this->comp->listeCompte();
             $this->load->helper('url');
 		    $this->load->view('listCompte',$data);
-    }		
+    }
+
+    public function modifier() {
+        session_start();
+        $id = $_SESSION['entreprise']['identreprise'];
+        $compte = $_GET['url'];
+        $datas = array();
+        $datas['page'] = array("active","","");
+        $this->load->helper('url');
+        $this->load->view('navbar/navbar',$datas);
+        $this->load->model('MCompte','compte');
+        $data = array();
+        $data['comptes'] = $this->compte->rechercheCompte($compte,$id);
+        $this->load->view('modificationCompte', $data);
+    }
+
+    public function confirmModification() {
+        session_start();
+        $id = $_SESSION['entreprise']['identreprise'];
+        $idcompte = $_POST['idcompte'];
+        $intitule = $_POST['intitule'];
+        $datas = array();
+        $datas['page'] = array("active","","");
+        $this->load->helper('url');
+        $this->load->view('navbar/navbar',$datas);
+        $this->load->model('MCompte','compte');
+        $this->compte->update($id,$idcompte,$intitule);
+        $data = array();
+        $data['listCompte'] = $this->compte->listeCompte($id);
+        $this->load->view('listCompte',$data);
+    }
+
+    public function supprimer() {
+        session_start();
+        $id = $_SESSION['entreprise']['identreprise'];
+        $idcompte = $_GET['url'];
+        $datas = array();
+        $datas['page'] = array("active","","");
+        $this->load->helper('url');
+        $this->load->view('navbar/navbar',$datas);
+        $this->load->model('MCompte','compte');
+        $this->compte->delete($id,$idcompte);
+        $data = array();
+        $data['listCompte'] = $this->compte->listeCompte($id);
+        $this->load->view('listCompte',$data);
+    }
 }

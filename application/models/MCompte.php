@@ -4,7 +4,7 @@
             $this->db->query("INSERT INTO Compte VALUES ('cpt'||NEXTVAL('s_comp'),'$numero','$intitule','$id')");
           }
           public function listeCompte($id){
-            $query = $this->db->query("SELECT * FROM Compte  where idEntreprise = '$id'");
+            $query = $this->db->query("SELECT * FROM Compte  where idEntreprise = '$id' order by numero");
             return $query->result_array();
           }
           public function isCompteExiste($numero,$id){
@@ -35,5 +35,15 @@
               $query = $this->db->query("select * from compte where lower(intitule) like '%$param%' and identreprise = '$id'");
               return $query->result_array();
           }
+
+          public function update($id,$idcompte,$intitule) {
+              $this->db->where(array('idcompte' => $idcompte, 'identreprise' => $id));
+              return $this->db->update('compte',array('intitule' => $intitule));
+          }
+
+        public function delete($id,$idcompte){
+            $this->db->where(array('numero' => $idcompte, 'identreprise' => $id));
+            return $this->db->delete('compte');
+        }
     }
 ?>
