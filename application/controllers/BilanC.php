@@ -33,7 +33,7 @@ class BilanC extends CI_Controller {
 		$this->load->model('MExercice','exe');
 		$data = array();
 		$data['id'] = array($idExercice);
-		$data['listNum'] = $this->exe->getListeCompteFromGL($id);
+		$data['listNum'] = $this->exe->getListeCompteFromGL($idExercice);
 		$data['exercice']=$this->exe->getExercice($idExercice,$id);
         $data['page'] = array("","active","");
 	    $this->load->helper('url');
@@ -98,5 +98,47 @@ class BilanC extends CI_Controller {
 		$this->load->view('navbar/navbar',$data);
 		$this->load->view('balance',$data);
 	}
+
+    public function etatFinancier(){
+        $id = $_SESSION['entreprise']['identreprise'];
+        $idExercice = $this->input->get("idExercice");
+        $data['page'] = array("","active","");
+        $data['idexercice'] = $idExercice;
+        $this->load->helper('url');
+        $this->load->view('navbar/navbar',$data);
+        $this->load->model("MWelcome",'profil');
+        $this->load->model("MExercice",'exo');
+        $data['exoinfo'] = $this->exo->getExercice($idExercice,$id);
+        $data['infos'] = $this->profil->getMyEntreprise($id);
+        $this->load->view('listEtatFinancier', $data);
+    }
+
+    public function modifier() {
+        $id = $_SESSION['entreprise']['identreprise'];
+        $idExercice = $this->input->get("idExercice");
+        $this->load->model('MExercice','ecr');
+        $data = array();
+        $data['exos'] = $this->ecr->getListeExercice($idExercice,$id);
+        $datas['page'] = array("","active","");
+        $this->load->helper('url');
+        $this->load->view('navbar/navbar',$datas);
+        $this->load->view('modifexo',$data);
+    }
+
+    public function supprimer() {
+        $id = $_SESSION['entreprise']['identreprise'];
+        $idExercice = $this->input->get("idExercice");
+        $this->load->model('MExercice','ecr');
+        $this->load->model('MEcriture','ecriture');
+        $this->load->model('MMouvement','mvt');
+        $this->mvt->supprimeMouvement($idExercice,$id);
+        $this->ecriture->supprimeEcriture($idExercice,$id);
+        $this->ecr->supprimerexo($idExercice,$id);
+        $datas['page'] = array("","active","");
+        $this->load->helper('url');
+        $this->load->view('navbar/navbar',$datas);
+        $data['listEx'] = $this->ecr->listeExercice($id);
+        $this->load->view('listeExercice',$data);
+    }
 	
 }

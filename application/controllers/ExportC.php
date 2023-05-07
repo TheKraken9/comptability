@@ -57,4 +57,13 @@ class ExportC extends CI_Controller {
 		}
 		fclose($file);
     }
+
+    public function exportPdf()
+    {
+        $this->load->library('Pdf');
+        $this->pdf->AddPage();
+        $this->pdf->SetFont('Arial','B',16);
+        $this->pdf->Cell(40,10,'Hello World !');
+        $this->pdf->Output();
+    }
 }

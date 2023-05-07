@@ -36,7 +36,7 @@
 <main class="container">
     <div class="bg-light" style="height:150px;">
     </div>
-  <div class="bg-light p-5 rounded">
+  <div class="shadow-lg p-5 rounded">
     <div style="background-color:white">
         <table class="table">
                 <tr class="table-light">

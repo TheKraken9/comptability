@@ -6,7 +6,7 @@
         transition: all .5s ease-in-out;
     }
     .navbar.tiers-navbar {
-        margin-top: 3px;
+        margin-top: 0px;
         background:  #0F243D !important;
         transition: all .5s ease-in-out;
     }
@@ -19,35 +19,37 @@
     <a class="navbar-brand" href="#"><p class="display-6 text-white" style="font-style: italic"><?php echo $exercice[0]['nomexercice'];?></p></a>
     <ul class="nav nav-pills">
     <li class="nav-item" >
-        <a class="nav-link text-white" href="#" ><?php echo $exercice[0]['debut'];?> a <?php echo $exercice[0]['fin'];?></a>
+        <a class="nav-link text-white" href="#" ><?php echo $exercice[0]['debut'];?> à <?php echo $exercice[0]['fin'];?></a>
     </li>
     <li class="nav-item">
     <a class="nav-link " href="#"></a>
     </li>
     <li class="nav-item" >
-        <a class="nav-link text-white" href="<?php echo site_url("EcritureC/codeJournale?idExercice="); ?><?php echo $exercice[0]['idexercice'];?>" style="background-color:#2E8B57">code journale</a>
+        <a class="nav-link text-white" href="<?php echo site_url("EcritureC/codeJournale?idExercice="); ?><?php echo $exercice[0]['idexercice'];?>" style="background-color:#2E8B57">Journal</a>
     </li>
     <li class="nav-item">
     <a class="nav-link " href="#"></a>
     </li>
     <li class="nav-item" >
-        <a class="nav-link text-white" href="<?php echo site_url("BilanC/grandLivre?idExercice="); ?><?php echo $exercice[0]['idexercice'];?>" style="background-color:#2E8B57">Grande Livre</a>
+        <a class="nav-link text-white" href="<?php echo site_url("BilanC/grandLivre?idExercice="); ?><?php echo $exercice[0]['idexercice'];?>" style="background-color:#2E8B57">Grand livre</a>
     </li>
     <li class="nav-item">
     <a class="nav-link " href="#"></a>
     </li>
     <li class="nav-item" >
-        <a class="nav-link text-white" href="<?php echo site_url("BilanC/balance?idExercice="); ?><?php echo $exercice[0]['idexercice'];?>" style="background-color:#2E8B57">balance</a>
+        <a class="nav-link text-white" href="<?php echo site_url("BilanC/balance?idExercice="); ?><?php echo $exercice[0]['idexercice'];?>" style="background-color:#2E8B57">Balance</a>
     </li>
     </ul>
 </nav>
 <nav id="navbar-example2" class="navbar top tiers-navbar navbar-light  bg-light px-2 double-nav">
-    <a class="navbar-brand" href="#"><p class="display-7 text-white" >Journale <?php echo $journale[0]['nom']?></br><?php echo  $mois[0]; ?>-<?php echo  $annee[0]; ?></p></a>
+    <a class="navbar-brand" href="#"><small class="display-7 text-white" >Journal | <?php echo $journale[0]['nom']?><br>Date du <?php echo  $mois[0]; ?>-<?php echo  $annee[0]; ?></small></a>
     <ul class="nav nav-pills">
     </ul>
 </nav>
-<main class="container">
-  <div class="bg-light p-5 rounded">
+<main class="container mb-5">
+    <div class="" style="margin-top: 50px">
+    </div>
+  <div class="shadow-lg p-5 rounded">
     <form methode="get" action="<?php echo site_url("SaisieC/addEcriture"); ?>">
         <table class="table">
                 <tr class="table">
@@ -55,7 +57,7 @@
                 </tr>
                 <tr class="table">
                     <th colspan="2">jour</th>
-                    <th colspan="2">libelle</th>
+                    <th colspan="2">libellé</th>
                     <th colspan="2">ref-piece</th>
                     <th colspan="2"></th>
                 </tr class="table">
@@ -66,30 +68,23 @@
                     <td colspan="2"></td>
                 </tr>
                 <tr class="table">
-                    <th colspan="8" class="display-6">mouvement</th>
+                    <th colspan="8" class="display-6">Mouvement</th>
                 </tr>
                 <tr class="table">
                     <th>compte</th>
                     <th>tiers</th>
-                    <th>credit</th>
-                    <th>debit</th>
+                    <th>crédit</th>
+                    <th>débit</th>
                     <th>valeur</th>
                     <th>taux</th>
                     <th>devise</th>
                     <th></th>
                 </tr>
                 <tbody id="demo" >
-                     <!---  <td><input type="number" class="form-control" name="compte" id=""></td>
-                       <td><input type="number" class="form-control" name="compte" id=""></td>
-                       <td><input type="number" class="form-control" name="compte" id=""></td>
-                       <td><input type="number" class="form-control" name="compte" id=""></td>
-                       <td><input type="number" class="form-control" name="compte" id=""></td>
-                       <td><input type="number" class="form-control" name="compte" id=""></td>
-                       <td><input type="number" class="form-control" name="compte" id=""></td>-->
                 </tbody>
                 <tr class="table">
-                    <th colspan="4">total debit</th>
-                    <th colspan="4">total credit</th>
+                    <th colspan="4">total débit</th>
+                    <th colspan="4">total crédit</th>
                 </tr>
                 <tbody id="total">
 
@@ -102,9 +97,9 @@
                     <input type="hidden" name="annee" value="<?php echo $annee[0]; ?>">
                     <input type="hidden" name="values" id="values" />
                 <div class="my-3">
-                    <button type="submit" class="btn btn-success me-2">valider</button>
-                    <button type="button" class="btn btn-success me-2" onclick="ajoutMouvement()">ajouter</button>
-                    <button type="button" class="btn btn-success me-2" onclick="equilibrer()">equilibrer</button>
+                    <button type="submit" class="btn btn-success me-2">Valider</button>
+                    <button type="button" class="btn btn-success me-2" onclick="ajoutMouvement()">Ajouter</button>
+                    <!--<button type="button" class="btn btn-success me-2" onclick="equilibrer()">Equilibrer</button>-->
                 </div>                                
     </form>
   </div>
@@ -119,7 +114,12 @@
         <?php foreach($listeDevise as $row){?>
             <option value="<?php echo $row['nomdevise'];?>">
         <?php } ?>
-    </datalist>                          
+    </datalist>
+    <datalist id="tiers">
+        <?php foreach($tiers as $row){?>
+            <option value="<?php echo $row['intitulecompte'];?>">
+        <?php } ?>
+    </datalist>
         <script>
             var i = 0;
             var a = "";
@@ -136,7 +136,10 @@
             xhttp.send();
         }
         function generateInput(y,compte,tiers,credit,debit,taux,valeur,devise){
-            return "<tr class='table'><td><input list='browser' type='text' class='form-control' name='compte"+y+"' id='compte"+y+"' placeholder='compte' value='"+compte+"' /></td><td><input type='text' class='form-control' name='tiers"+y+"' id='tiers"+y+"'placeholder='tiers' value='"+tiers+"'/></td><td> <input type='number' class='form-control' name='credit"+y+"' id='credit"+y+"' placeholder='credit' class='form-control' value='"+credit+"' onfocus='calculeDevise("+y+",true)'/></td><td><input type='number' name='debit"+y+"' id='debit"+y+"'placeholder='debit' class='form-control' value='"+debit+"' onfocus='calculeDevise("+y+",false)'/></td><td><input type='number' name='valeur"+y+"' id='valeur"+y+"' placeholder='valeur' class='form-control' value='"+valeur+"'></td><td><input type='number' class='form-control' name='taux"+y+"' id='taux"+y+"' placeholder='En Ariary' value='"+taux+"'></td><td><input list='devise' class='form-control' name='devise' id='devise"+y+"' placeholder='devise' value='"+devise+"'></td><td><button type='button' class='btn' style='background-color:red;' onclick='effacer("+y+")' >X</button></td></tr>";
+            return "<tr class='table'>" +
+                "<td><input list='browser' type='text' class='form-control' name='compte"+y+"' id='compte"+y+"' placeholder='compte' value='"+compte+"' /></td>" +
+                "<td><input list='tiers' type='text' class='form-control' name='tiers"+y+"' id='tiers"+y+"'placeholder='tiers' value='"+tiers+"'/></td>" +
+                "<td> <input type='number' class='form-control' name='credit"+y+"' id='credit"+y+"' placeholder='credit' class='form-control' value='"+credit+"' onfocus='calculeDevise("+y+",true)'/></td><td><input type='number' name='debit"+y+"' id='debit"+y+"'placeholder='debit' class='form-control' value='"+debit+"' onfocus='calculeDevise("+y+",false)'/></td><td><input type='number' name='valeur"+y+"' id='valeur"+y+"' placeholder='valeur' class='form-control' value='"+valeur+"'></td><td><input type='number' class='form-control' name='taux"+y+"' id='taux"+y+"' placeholder='En Ariary' value='"+taux+"'></td><td><input list='devise' class='form-control' name='devise' id='devise"+y+"' placeholder='devise' value='"+devise+"'></td><td><button type='button' class='btn' style='background-color:red;' onclick='effacer("+y+")' >X</button></td></tr>";
         }
         function calculeDevise(y,boolcredit){
             var taux = document.getElementById("taux"+y).value;

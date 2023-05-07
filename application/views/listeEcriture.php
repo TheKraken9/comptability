@@ -8,7 +8,7 @@
         transition: all .5s ease-in-out;
     }
     .navbar.tiers-navbar {
-        margin-top: 172px;
+        margin-top: 150px;
         background: #0F243D !important;
         transition: all .5s ease-in-out;
     }
@@ -27,24 +27,24 @@
     <a class="nav-link " href="#"></a>
     </li>
     <li class="nav-item" >
-        <a class="nav-link text-white" href="<?php echo site_url("EcritureC/codeJournale?idExercice="); ?><?php echo $exercice[0]['idexercice'];?>" style="background-color:#2E8B57">code journal</a>
+        <a class="nav-link text-white" href="<?php echo site_url("EcritureC/codeJournale?idExercice="); ?><?php echo $exercice[0]['idexercice'];?>" style="background-color:#2E8B57">Journal</a>
     </li>
     <li class="nav-item">
     <a class="nav-link " href="#"></a>
     </li>
     <li class="nav-item" >
-        <a class="nav-link text-white" href="<?php echo site_url("BilanC/grandLivre?idExercice="); ?><?php echo $exercice[0]['idexercice'];?>" style="background-color:#2E8B57">Grand Livre</a>
+        <a class="nav-link text-white" href="<?php echo site_url("BilanC/grandLivre?idExercice="); ?><?php echo $exercice[0]['idexercice'];?>" style="background-color:#2E8B57">Grand livre</a>
     </li>
     <li class="nav-item">
     <a class="nav-link " href="#"></a>
     </li>
     <li class="nav-item" >
-        <a class="nav-link text-white" href="<?php echo site_url("BilanC/balance?idExercice="); ?><?php echo $exercice[0]['idexercice'];?>" style="background-color:#2E8B57">balance</a>
+        <a class="nav-link text-white" href="<?php echo site_url("BilanC/balance?idExercice="); ?><?php echo $exercice[0]['idexercice'];?>" style="background-color:#2E8B57">Balance</a>
     </li>
     </ul>
 </nav>
 <nav id="navbar-example2" class="navbar fixed-top tiers-navbar navbar-light  bg-light px-2 double-nav">
-    <a class="navbar-brand" href="#"><p class="display-7 text-white" >Journal <?php echo $journale[0]['nom']?></br><?php echo  $mois[0]; ?>-<?php echo  $annee[0]; ?></p></a>
+    <a class="navbar-brand" href="#"><small class="display-7 text-white" >Journal | <?php echo $journale[0]['nom']?></br>Date du <?php echo  $mois[0]; ?>-<?php echo  $annee[0]; ?></small></a>
     <ul class="nav nav-pills">
     <li class="nav-item" >
         <a class="nav-link active" href="<?php echo site_url("SaisieC/index");?>?idExercice=<?php echo $idExe ;?>&&idCode=<?php echo $idCode[0] ;?>&&mois=<?php echo  $mois[0]; ?>&&annee=<?php echo  $annee[0]; ?>" style="background-color:green">Saisie Ecriture</a>
@@ -55,21 +55,21 @@
 <main class="container">
     <div class="bg-light" style="height:250px;">
     </div>
-  <div class="bg-light p-5 rounded">
+  <div class="shadow-lg p-5 rounded">
   <table class="table">
     <table class="table">
         <tr style="background-color:#0F243D; color: white">
-            <th>jour</th>
-            <th>Libelle</th>
-            <th>ref_piece</th>
+            <th>JOUR</th>
+            <th>LIBELLÉ</th>
+            <th>REF. PIÈCE</th>
             <th></th>
         </tr>
-        <?php foreach($lisEcriture as $row){?>
+        <?php foreach($listEcriture as $row){?>
             <tr>
                 <th><?php echo $row['jour'];?></th>
                 <td><?php echo $row['libelle'];?></td>
                 <td><?php echo $row['ref_piece'];?></td>
-                <td><a href="<?php echo site_url("SaisieC/listerEcriture");  ?>?idExercice=<?php echo $idExe ;?>&&idCode=<?php echo $idCode[0] ;?>&&mois=<?php echo  $mois[0]; ?>&&annee=<?php echo  $annee[0]; ?>&&idEcriture=<?php echo $row['idecriture'];?>">details</a></td>
+                <td><a href="<?php echo site_url("SaisieC/listerEcriture");  ?>?idExercice=<?php echo $idExe ;?>&&idCode=<?php echo $idCode[0] ;?>&&mois=<?php echo  $mois[0]; ?>&&annee=<?php echo  $annee[0]; ?>&&idEcriture=<?php echo $row['idecriture'];?>">Details</a></td>
             </tr>
         <?php } ?>
     </table>

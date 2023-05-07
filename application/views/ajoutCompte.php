@@ -19,14 +19,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <a class="navbar-brand" href="#"><p class="display-6 text-white" style="font-style: italic" >Saisie Compte</p></a>
     <ul class="nav nav-pills">
     <li class="nav-item" >
-        <a class="nav-link active" href="<?php echo site_url("Welcome/compte"); ?>">liste Compte</a>
+        <a class="nav-link active me-3" href="<?php echo site_url("Welcome/compte"); ?>" style="background-color:#2E8B57">Liste Comptes</a>
     </li>
     </ul>
 </nav>
-<main class="container">
-    <div class="bg-light" style="height:150px;">
+<main class="container w-75">
+    <div class="" style="height:150px;margin-top: 50px">
     </div>
-  <div class="bg-light p-5 rounded">
+  <div class="shadow-lg p-5 rounded">
     <?php if($error[0] != ''){?>
       <div class="alert alert-danger d-flex align-items-center" role="alert">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
@@ -37,7 +37,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
       </div>
     <?php } ?>
-        <form  action="<?php echo site_url("CompteC/ajoutCompte"); ?>" method="get">
+        <form  action="<?php echo site_url("CompteC/ajoutCompte"); ?>" method="get" class="container">
             <div class="input-group mb-3">
             <span class="input-group-text text-white" style="background-color:#0F243D">compte</span>
               <select name="nume" class="form-select">
@@ -52,11 +52,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <input type="text" class="form-control" name="intitule"  placeholder="intitule">
             </div>
             <div class="row">
-                <div class="col-sm-4"> </div>
-                <div class="col-sm-4"></div>
+                <div class="col-sm-3"> </div>
                 <div class="col-sm-3"></div>
-                <div class="col-sm-1">
-                  <button type="submit" class="btn text-white btn-primary" style="">Valider</button>
+                <div class="col-sm-3"></div>
+                <div class="col-sm-3">
+                  <button type="submit" class="btn text-white btn-success float-end mt-3" style="">Valider</button>
                 </div>
             </div>
         </form>

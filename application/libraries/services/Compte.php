@@ -1,5 +1,5 @@
 <?php
-//include('/opt/lampp/htdocs/comptability/application/libraries/PDF.php');
+//include('/opt/lampp/htdocs/comptability/application/libraries/Pdf.php');
 class Compte
 {
       private $idCompte = "";
@@ -14,6 +14,15 @@ class Compte
                 throw new Exception("veillez remplir l'intitule");
             }
       }
+
+    public function traitementCompteTiers($nom,$intitule){
+        if($nom == ''){
+            throw new Exception("veillez remplir le nom");
+        }
+        if($intitule ==''){
+            throw new Exception("veillez remplir l'intitule");
+        }
+    }
       public function traitementNumero($num,$numero,$nbreCara){
             $numI = $num."".$numero;
             $i = 0;
@@ -29,7 +38,7 @@ class Compte
             return $numI;
       }
       public function listeCompteEnPdf($list){
-            $pdf = new PDF();
+            $pdf = new Pdf();
 			$pdf->SetFont('Arial','',10);
 			$pdf->AddPage();
 		    $tai = array(40,100);

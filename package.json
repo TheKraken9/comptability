@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "parsleyjs": "^2.9.2",
     "validator": "^13.9.0"
   }
 }

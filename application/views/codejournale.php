@@ -21,37 +21,47 @@
     <a class="nav-link " href="#"></a>
     </li>
     <li class="nav-item" >
-        <a class="nav-link text-white" href="<?php echo site_url("EcritureC/codeJournale?idExercice="); ?><?php echo $exercice[0]['idexercice'];?>" style="background-color:#2E8B57">code journale</a>
+        <a class="nav-link text-white" href="<?php echo site_url("EcritureC/codeJournale?idExercice="); ?><?php echo $exercice[0]['idexercice'];?>" style="background-color:#2E8B57">Journal</a>
     </li>
     <li class="nav-item">
     <a class="nav-link " href="#"></a>
     </li>
     <li class="nav-item" >
-        <a class="nav-link text-white" href="<?php echo site_url("BilanC/grandLivre?idExercice="); ?><?php echo $idExe;?>" style="background-color:#2E8B57">Grande Livre</a>
+        <a class="nav-link text-white" href="<?php echo site_url("BilanC/grandLivre?idExercice="); ?><?php echo $idExe;?>" style="background-color:#2E8B57">Grand livre</a>
     </li>
     <li class="nav-item">
     <a class="nav-link " href="#"></a>
     </li>
     <li class="nav-item" >
-        <a class="nav-link text-white" href="<?php echo site_url("BilanC/balance?idExercice="); ?><?php echo $idExe;?>" style="background-color:#2E8B57">balance</a>
+        <a class="nav-link text-white" href="<?php echo site_url("BilanC/balance?idExercice="); ?><?php echo $idExe;?>" style="background-color:#2E8B57">Balance</a>
     </li>
    
     </ul>
 </nav>
-<main class="container">
-    <div class="bg-light" style="height:150px;">
+<main class="container text-center mb-5">
+    <div class="" style="height:120px;margin-top: 50px">
     </div>
-  <div class="bg-light p-5 rounded">
-  <table class="table">
-    <tr style="background-color:#0F243D; color: white">
-        <th>CODE JOURNALE</th>
-    </tr>
-        <?php foreach ($listJournale as $row) {?>
-            <tr>
-                <td><a href="<?php echo site_url("EcritureC/sousJournale?idExercice=");?><?php echo $idExe;?>&&idCode=<?php echo $row['idcodejournale'];?>"><?php echo $row['nom']; ?></a></td>
-            </tr>
-        <?php }?>
-    </table>
+  <div class="shadow-lg p-5 w-75 container rounded">
+      <table class="container">
+          <nav>
+              <ul class="nav nav-fill">
+                  <tr style="background-color:#0F243D; color: white">
+                      <th>CODE</th>
+                      <th>INTITULÉ</th>
+                      <th>ACTION</th>
+                  </tr>
+                  <?php foreach ($listJournale as $row) { ?>
+                      <tr>
+                          <td><?= $row['code'] ?></td>
+                          <td><?= $row['nom'] ?></td>
+                          <td class="nav-item">
+                              <a class="nav-link" href="<?php echo site_url("EcritureC/sousJournale?idExercice=");?><?php echo $idExe;?>&&idCode=<?php echo $row['idcodejournale'];?>"><i class="fas fa-edit"></i></a>
+                          </td>
+                      </tr>
+                  <?php } ?>
+              </ul>
+          </nav>
+      </table>
   </div>
 </main>
   </body>

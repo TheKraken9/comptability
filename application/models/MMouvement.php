@@ -13,8 +13,6 @@
             else{
               $this->db->query("INSERT INTO Mouvement VALUES ('s_mvt'||NEXTVAL('s_mvt'),'$idEcriture','$idCompte','$idtiers',$credit,$debit,'$id')");
             }
-           // echo "INSERT INTO Mouvement VALUES ('s_mvt'||NEXTVAL('s_mvt'),'$idEcriture','$idCompte','$idtiers',$credit,$debit)";
-           
           }
           public function listeMouvementCredit($idEcriture){
             $query = $this->db->query("SELECT * FROM vMouvement where idEcriture='$idEcriture' and debit=0.0 order by idMouvement asc ");
@@ -23,6 +21,10 @@
           public function listeMouvementDebit($idEcriture){
             $query = $this->db->query("SELECT * FROM vMouvement where idEcriture='$idEcriture' and credit=0.0 order by idMouvement asc ");
             return $query->result_array();
+          }
+
+          public function supprimeMouvement($idExercice,$id) {
+              $query = $this->db->query("DELETE from Mouvement using Ecriture E where Mouvement.idEcriture = E.idEcriture and E.idExercice = '$idExercice' and E.idEntreprise = '$id'");
           }
     }
 ?>

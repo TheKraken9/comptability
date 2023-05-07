@@ -40,8 +40,10 @@ class SaisieC extends CI_Controller {
 		$this->load->model('MMouvement','mvt');
 		$this->load->model('MExercice','exe');
         $this->load->model('MCodeJournale','code');
+        $this->load->model('MTiers','tiers');
 		$comp = new Compte();
-		$data['listeCompte'] =$this->comp->listeCompte($id);
+		$data['listeCompte'] = $this->comp->listeCompte($id);
+        $data['tiers'] = $this->tiers->getAllTiers($id);
 		$this->load->model('MDevise','dv');
 		$data['listeDevise'] = $this->dv->listeDevise();
 		$data['page'] = array("","active","");
@@ -82,6 +84,7 @@ class SaisieC extends CI_Controller {
 		$this->load->view('devise');
 	}
     public function addEcriture(){
+        $ident = $_SESSION['entreprise']['identreprise'];
 		$idExercice = $this->input->get('idExercice');
         $idCode = $this->input->get('idCode');
         $mois = $this->input->get('mois');
@@ -115,27 +118,27 @@ class SaisieC extends CI_Controller {
 			$this->load->model('MMouvement','mvt');
 			$this->load->model('MTiers','tiers');
 			for($i = 0 ; $i < count($compte) ; $i++){
-				$this->cmp->valideCompte($compte[$i]);
-				$id = $this->cmp->rechercheCompte($compte[$i]);
+				$this->cmp->valideCompte($compte[$i], $ident);
+				$id = $this->cmp->rechercheCompte($compte[$i], $ident);
 			}
 			for($i = 0 ; $i < count($compte) ; $i++){
-				
 				if($i == 0){
-					$idecr = $this->ecr->ajout($idExercice,$idCode,$date,$libelle,$ref);
+					$idecr = $this->ecr->ajout($idExercice,$idCode,$date,$libelle,$ref,$ident);
 				}
 				if($tiers[$i] != ''){
-					$res = $this->tiers->isExisteTiers($tiers[$i]);
+					$res = $this->tiers->isExisteTiers($tiers[$i], $ident);
 					if(count($res) > 0){
 						$tiers[$i] = $res[0]['idtiers'];
 					}else{
-						$tiers[$i] = $this->tiers->ajout($tiers[$i]);
+						//$tiers[$i] = $this->tiers->ajout($tiers[$i],$ident);
 					}
 				}
-				$this->mvt->ajout($idecr,$id[0]['idcompte'],$tiers[$i],$credit[$i],$debit[$i]);
+                $id = $this->cmp->rechercheCompte($compte[$i], $ident);
+				$this->mvt->ajout($idecr,$compte[$i],$tiers[$i],$credit[$i],$debit[$i], $ident);
 			}
 			echo "<script>function rtn() {
 				window.history.back();
-		   }</script><h1>ecriture bien ajouter</h1><button onclick='rtn()'>retour</button>";
+		   }</script><h1>Écriture bien ajouté</h1><button onclick='rtn()'>retour</button>";
 		  } catch (Exception $th) {
 		    $data = array();
 			$data['error'] = array($th->getMessage());
